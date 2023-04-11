@@ -1,0 +1,19 @@
+spring:
+  main:
+    banner-mode: "off"
+  rabbitmq:
+    listener:
+      recoveryInterval: 30000
+      batch-size: 100
+      receive-timeout: 100
+      simple:
+        concurrency: 1
+        max-concurrency: 1
+    template:
+      reply-timeout: 2000
+  application:
+    name: local
+
+server:
+  address: ${SERVER_URI:127.0.0.1}
+  port: 8080

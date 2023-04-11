@@ -1,0 +1,27 @@
+package com.icemobile.rabbitsandbox.rabbit.service;
+
+import com.icemobile.rabbitsandbox.commons.dto.UserDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
+@Slf4j
+public class UserService {
+
+    private Map<String, UserDto> users = new HashMap<>();
+
+    public void createUser(UserDto user) {
+        users.put(user.getLogin(), user);
+    }
+
+    public void updateUser(UserDto user) {
+        users.put(user.getLogin(), user);
+    }
+
+    public UserDto getUser(String login) {
+        return users.get(login);
+    }
+}

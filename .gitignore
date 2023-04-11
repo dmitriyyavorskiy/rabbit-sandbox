@@ -1,0 +1,25 @@
+**/*.iml
+.DS_Store
+.idea
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.rar
+/app.pid
+/logs/
+/paho*
+*/target
+/target
