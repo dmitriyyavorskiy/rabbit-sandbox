@@ -4,7 +4,7 @@ import com.icemobile.rabbitsandbox.commons.dto.UserDto;
 import lombok.Data;
 
 @Data
-public class UpdateUserMessage {
+public class UpdateUserMessage extends RabbitMessage {
 
     private UserDto user;
 

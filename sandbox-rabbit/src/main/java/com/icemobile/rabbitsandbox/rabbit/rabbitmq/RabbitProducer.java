@@ -21,21 +21,21 @@ public class RabbitProducer {
     private final RabbitTemplate rabbitTemplate;
 
     public Optional<GetUserResponseMessage> getUser(GetUserMessage message) {
-        log.debug("Sending get user message {}", message);
+        log.info("Sending get user message {}", message);
         return Optional.ofNullable((GetUserResponseMessage) rabbitTemplate.convertSendAndReceive(
             RabbitConstants.USER_EXCHANGE_NAME,
             RabbitConstants.USER_QUEUE_NAME, message));
     }
 
     public void createUser(CreateUserMessage message) {
-        log.debug("Sending create user batch message {}", message);
+        log.info("Sending create user batch message {}", message);
         rabbitTemplate.convertAndSend(
-            RabbitConstants.USER_BATCH_EXCHANGE_NAME,
-            RabbitConstants.USER_BATCH_QUEUE_NAME, message);
+            RabbitConstants.USER_EXCHANGE_NAME,
+            RabbitConstants.USER_QUEUE_NAME, message);
     }
 
     public void updateUser(UpdateUserMessage message) {
-        log.debug("Sending update user batch message {}", message);
+        log.info("Sending update user batch message {}", message);
         rabbitTemplate.convertAndSend(
             RabbitConstants.USER_EXCHANGE_NAME,
             RabbitConstants.USER_QUEUE_NAME, message);

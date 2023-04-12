@@ -4,7 +4,7 @@ spring:
   rabbitmq:
     listener:
       recoveryInterval: 30000
-      batch-size: 100
+      batch-size: 5
       receive-timeout: 100
       simple:
         concurrency: 1

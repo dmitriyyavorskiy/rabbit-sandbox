@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Testcontainers
-@ContextConfiguration(initializers = {MongoSharedDockerContainer.Initializer.class, RabbitSharedDockerContainer.Initializer.class})
+@ContextConfiguration(initializers = {RabbitSharedDockerContainer.Initializer.class})
 @EnableAutoConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public @interface SpringBootDockerTest {

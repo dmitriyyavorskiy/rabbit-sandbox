@@ -12,10 +12,10 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 @Slf4j
-public abstract class IntegrationTest implements MongoSharedDockerContainer, RabbitSharedDockerContainer {
+public abstract class IntegrationTest implements RabbitSharedDockerContainer {
 
-    @Autowired
-    private List<CrudRepository<?, ?>> repositories;
+//    @Autowired
+//    private List<CrudRepository<?, ?>> repositories;
 
     @Autowired
     private RabbitAdmin rabbitAdmin;
@@ -33,14 +33,14 @@ public abstract class IntegrationTest implements MongoSharedDockerContainer, Rab
         allQueues.forEach(rabbitAdmin::purgeQueue);
     }
 
-    @AfterEach
-    public void deleteAllData() {
-        log.info("Deleting all data from repositories");
-        long t1 = System.currentTimeMillis();
-        repositories.forEach(CrudRepository::deleteAll);
-        long t2 = System.currentTimeMillis();
-        log.info("Deleting all for {} ms", t2 - t1);
-
-    }
+//    @AfterEach
+//    public void deleteAllData() {
+//        log.info("Deleting all data from repositories");
+//        long t1 = System.currentTimeMillis();
+//        repositories.forEach(CrudRepository::deleteAll);
+//        long t2 = System.currentTimeMillis();
+//        log.info("Deleting all for {} ms", t2 - t1);
+//
+//    }
 
 }

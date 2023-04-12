@@ -1,11 +1,14 @@
 package com.icemobile.rabbitsandbox.commons.dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 @Data
-public class UserDto {
+@Accessors(chain = true)
+public class UserDto implements Serializable {
 
 	private String login;
 

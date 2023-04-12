@@ -86,9 +86,24 @@ public class RabbitConfig implements RabbitListenerConfigurer {
     }
 
     @Bean
-    Binding unrealBinding(Queue userQueue, TopicExchange userExchange) {
+    Binding userBinding(Queue userQueue, TopicExchange userExchange) {
         return BindingBuilder.bind(userQueue).to(userExchange).with(RabbitConstants.USER_QUEUE_NAME);
     }
+
+//    @Bean
+//    public Queue userBatchQueue() {
+//        return QueueBuilder.durable(RabbitConstants.USER_BATCH_QUEUE_NAME).build();
+//    }
+//
+//    @Bean
+//    public TopicExchange userBatchExchange() {
+//        return new TopicExchange(RabbitConstants.USER_BATCH_EXCHANGE_NAME);
+//    }
+//
+//    @Bean
+//    Binding userBatchBinding(Queue userBatchQueue, TopicExchange userBatchExchange) {
+//        return BindingBuilder.bind(userBatchQueue).to(userBatchExchange).with(RabbitConstants.USER_BATCH_QUEUE_NAME);
+//    }
 
     @Bean
     public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {

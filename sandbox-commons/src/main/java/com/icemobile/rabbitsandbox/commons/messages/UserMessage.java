@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserMessage {
+public class UserMessage extends RabbitMessage {
 
     private UserDto user;
 

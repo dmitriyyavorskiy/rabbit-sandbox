@@ -14,6 +14,7 @@ public class UserService {
     private Map<String, UserDto> users = new HashMap<>();
 
     public void createUser(UserDto user) {
+        log.info("Adding user {}", user);
         users.put(user.getLogin(), user);
     }
 
@@ -23,5 +24,9 @@ public class UserService {
 
     public UserDto getUser(String login) {
         return users.get(login);
+    }
+
+    public int getUserCount() {
+        return users.size();
     }
 }

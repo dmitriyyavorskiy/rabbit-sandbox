@@ -16,14 +16,12 @@ import java.util.List;
 public interface RabbitSharedDockerContainer {
     int PORT = 5672;
     int ADMIN_PORT = 15672;
-    int MQTT_PORT = 1883;
-    int MQTT_AUTH_PORT = 15675;
 
     RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.11-management")
-        .withPluginsEnabled("rabbitmq_management", "rabbitmq_mqtt", "rabbitmq_web_mqtt")
+        .withPluginsEnabled("rabbitmq_management")
         .withRabbitMQConfig(MountableFile.forClasspathResource("rabbitmq.conf"))
         .withAdminPassword("guest")
-        .withExposedPorts(PORT, ADMIN_PORT, MQTT_PORT, MQTT_AUTH_PORT)
+        .withExposedPorts(PORT, ADMIN_PORT)
         .withReuse(true);
 
     @BeforeAll
