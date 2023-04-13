@@ -58,6 +58,20 @@ public class RabbitTest extends IntegrationTest {
 
     @Test
     public void exceptionMessage() {
+
+        // send user create message
+        IntStream.range(1, 11).forEach(it -> producer.createUser(new UserDto().setLogin("Login " + it).setName("User " + it)));
+        Awaitility.await().atMost(1, TimeUnit.SECONDS).until(() -> userService.getUserCount() == 10);
+
+        // send get user and get response
+        Awaitility.await().atMost(1, TimeUnit.SECONDS).until(() -> {
+            try {
+                return producer.deactiveUser("Login " + 10).getUser() != null;
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         assertThrows(UserNotFoundException.class, () -> producer.deactiveUser("404"));
     }
 }
