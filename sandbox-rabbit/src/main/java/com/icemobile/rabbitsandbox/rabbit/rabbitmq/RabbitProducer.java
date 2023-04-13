@@ -12,6 +12,7 @@ import com.icemobile.rabbitsandbox.rabbit.config.RabbitSettings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.RemoteInvocationResult;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -51,12 +52,17 @@ public class RabbitProducer {
             RabbitConstants.USER_QUEUE_NAME, message);
     }
 
-    public DeactivateUserResponseMessage deactiveUser(String login) {
+    public DeactivateUserResponseMessage deactiveUser(String login) throws Throwable {
         var message = new DeactivateUserMessage(login);
         log.info("Sending deactivate user message {}", message);
-        return (DeactivateUserResponseMessage) rabbitTemplate.convertSendAndReceive(
+        var result = rabbitTemplate.convertSendAndReceive(
             RabbitConstants.USER_EXCHANGE_NAME,
             RabbitConstants.USER_QUEUE_NAME, message);
+
+        if (result instanceof RemoteInvocationResult response) {
+            throw response.getException();
+        }
+        return (DeactivateUserResponseMessage) result;
     }
 
 }

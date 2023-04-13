@@ -2,6 +2,7 @@ package com.icemobile.rabbitsandbox.rabbit.rabbitmq;
 
 import com.icemobile.rabbitsandbox.commons.constants.RabbitConstants;
 import com.icemobile.rabbitsandbox.commons.dto.UserDto;
+import com.icemobile.rabbitsandbox.commons.exception.UserNotFoundException;
 import com.icemobile.rabbitsandbox.commons.messages.user.CreateUserMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.DeactivateUserMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.DeactivateUserResponseMessage;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RabbitListener(queues = {RabbitConstants.USER_QUEUE_NAME})
+@RabbitListener(queues = {RabbitConstants.USER_QUEUE_NAME}, returnExceptions = "true")
 @RequiredArgsConstructor
 public class RabbitUserConsumer {
 
@@ -43,7 +44,7 @@ public class RabbitUserConsumer {
     }
 
     @RabbitHandler
-    public DeactivateUserResponseMessage listen(DeactivateUserMessage message) {
+    public DeactivateUserResponseMessage listen(DeactivateUserMessage message) throws UserNotFoundException {
         log.info("Received deactivate user message {}", message);
         var user = userService.deactivateUser(message.getLogin());
         return new DeactivateUserResponseMessage(user);

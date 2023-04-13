@@ -1,6 +1,7 @@
 package com.icemobile.rabbitsandbox.rabbit.rabbitmq;
 
 import com.icemobile.rabbitsandbox.commons.dto.UserDto;
+import com.icemobile.rabbitsandbox.commons.exception.UserNotFoundException;
 import com.icemobile.rabbitsandbox.rabbit.config.IntegrationTest;
 import com.icemobile.rabbitsandbox.rabbit.config.annotations.SpringBootDockerTest;
 import com.icemobile.rabbitsandbox.rabbit.service.UserService;
@@ -12,6 +13,7 @@ import org.testcontainers.shaded.org.awaitility.Awaitility;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @AutoConfigureMockMvc
@@ -52,5 +54,10 @@ public class RabbitTest extends IntegrationTest {
 
         assertTrue(producer.getUser("Login " + 11).isEmpty());
 
+    }
+
+    @Test
+    public void exceptionMessage() {
+        assertThrows(UserNotFoundException.class, () -> producer.deactiveUser("404"));
     }
 }

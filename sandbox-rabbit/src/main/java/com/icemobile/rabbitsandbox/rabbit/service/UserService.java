@@ -1,6 +1,7 @@
 package com.icemobile.rabbitsandbox.rabbit.service;
 
 import com.icemobile.rabbitsandbox.commons.dto.UserDto;
+import com.icemobile.rabbitsandbox.commons.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class UserService {
         return users.values();
     }
 
-    public UserDto deactivateUser(String login) {
-        return getUser(login).map(user -> user.setActive(false)).orElseGet(null);
+    public UserDto deactivateUser(String login) throws UserNotFoundException {
+        return getUser(login).map(user -> user.setActive(false)).orElseThrow(() -> new UserNotFoundException(login));
     }
 }
