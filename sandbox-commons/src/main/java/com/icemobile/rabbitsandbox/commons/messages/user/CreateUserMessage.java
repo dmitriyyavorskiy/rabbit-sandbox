@@ -1,11 +1,10 @@
-package com.icemobile.rabbitsandbox.commons.messages;
+package com.icemobile.rabbitsandbox.commons.messages.user;
 
 import com.icemobile.rabbitsandbox.commons.dto.UserDto;
+import com.icemobile.rabbitsandbox.commons.messages.RabbitMessage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

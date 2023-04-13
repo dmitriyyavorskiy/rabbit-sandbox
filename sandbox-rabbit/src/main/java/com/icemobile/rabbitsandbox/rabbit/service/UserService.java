@@ -4,6 +4,7 @@ import com.icemobile.rabbitsandbox.commons.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 @Slf4j
 public class UserService {
 
-    private Map<String, UserDto> users = new HashMap<>();
+    private final Map<String, UserDto> users = new HashMap<>();
 
     public void createUser(UserDto user) {
         log.info("Adding user {}", user);
@@ -28,5 +29,9 @@ public class UserService {
 
     public int getUserCount() {
         return users.size();
+    }
+
+    public Collection<UserDto> getUsers() {
+        return users.values();
     }
 }

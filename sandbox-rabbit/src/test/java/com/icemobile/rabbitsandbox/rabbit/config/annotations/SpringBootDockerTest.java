@@ -1,6 +1,5 @@
 package com.icemobile.rabbitsandbox.rabbit.config.annotations;
 
-import com.icemobile.rabbitsandbox.rabbit.config.database.MongoSharedDockerContainer;
 import com.icemobile.rabbitsandbox.rabbit.config.rabbit.RabbitSharedDockerContainer;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;

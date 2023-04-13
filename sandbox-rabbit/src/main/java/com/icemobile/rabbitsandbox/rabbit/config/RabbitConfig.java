@@ -1,6 +1,7 @@
 package com.icemobile.rabbitsandbox.rabbit.config;
 
 import com.icemobile.rabbitsandbox.commons.constants.RabbitConstants;
+import com.icemobile.rabbitsandbox.rabbit.rabbitmq.RabbitErrorHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -20,6 +21,8 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
 @Configuration
 @Slf4j
 public class RabbitConfig implements RabbitListenerConfigurer {
+
+    private RabbitErrorHandler errorHandler;
 
     @Value("${spring.rabbitmq.template.reply-timeout}")
     private int replyTimeout;
@@ -47,6 +50,7 @@ public class RabbitConfig implements RabbitListenerConfigurer {
         factory.setRecoveryInterval(recoveryInterval);
         factory.setConcurrentConsumers(listenerConcurrency);
         factory.setMaxConcurrentConsumers(listenerMaxConcurrency);
+        factory.setErrorHandler(errorHandler);
         return factory;
     }
 
