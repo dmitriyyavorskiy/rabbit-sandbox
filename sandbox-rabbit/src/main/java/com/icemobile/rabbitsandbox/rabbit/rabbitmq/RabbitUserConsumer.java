@@ -1,7 +1,10 @@
 package com.icemobile.rabbitsandbox.rabbit.rabbitmq;
 
 import com.icemobile.rabbitsandbox.commons.constants.RabbitConstants;
+import com.icemobile.rabbitsandbox.commons.dto.UserDto;
 import com.icemobile.rabbitsandbox.commons.messages.user.CreateUserMessage;
+import com.icemobile.rabbitsandbox.commons.messages.user.DeactivateUserMessage;
+import com.icemobile.rabbitsandbox.commons.messages.user.DeactivateUserResponseMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.GetUserMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.GetUserResponseMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.UpdateUserMessage;
@@ -36,7 +39,13 @@ public class RabbitUserConsumer {
     public GetUserResponseMessage listen(GetUserMessage message) {
         log.info("Received get user message {}", message);
         var user = userService.getUser(message.getLogin());
-        return new GetUserResponseMessage(user);
+        return new GetUserResponseMessage(user.orElse(null));
     }
 
+    @RabbitHandler
+    public DeactivateUserResponseMessage listen(DeactivateUserMessage message) {
+        log.info("Received deactivate user message {}", message);
+        var user = userService.deactivateUser(message.getLogin());
+        return new DeactivateUserResponseMessage(user);
+    }
 }

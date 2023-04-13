@@ -8,8 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 public class RabbitErrorHandler implements ErrorHandler {
 
     @Override
-    public void handleError(Throwable t) {
-        log.error("Rabbit exception {}", t.getMessage());
+    public void handleError(Throwable e) {
+        log.error("Rabbit exception {}", e.getMessage());
+        log.error("", e);
     }
 
 }

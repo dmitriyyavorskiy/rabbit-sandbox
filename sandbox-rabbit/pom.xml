@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>sandbox-mongodb</artifactId>
+            <artifactId>sandbox-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
 

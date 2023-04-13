@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -23,8 +24,8 @@ public class UserService {
         users.put(user.getLogin(), user);
     }
 
-    public UserDto getUser(String login) {
-        return users.get(login);
+    public Optional<UserDto> getUser(String login) {
+        return Optional.ofNullable(users.get(login));
     }
 
     public int getUserCount() {
@@ -33,5 +34,9 @@ public class UserService {
 
     public Collection<UserDto> getUsers() {
         return users.values();
+    }
+
+    public UserDto deactivateUser(String login) {
+        return getUser(login).map(user -> user.setActive(false)).orElseGet(null);
     }
 }

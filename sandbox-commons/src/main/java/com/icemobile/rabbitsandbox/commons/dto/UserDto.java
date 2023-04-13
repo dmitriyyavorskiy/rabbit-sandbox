@@ -18,4 +18,6 @@ public class UserDto implements Serializable {
 
 	private OffsetDateTime birthDate;
 
+	private boolean active = true;
+
 }

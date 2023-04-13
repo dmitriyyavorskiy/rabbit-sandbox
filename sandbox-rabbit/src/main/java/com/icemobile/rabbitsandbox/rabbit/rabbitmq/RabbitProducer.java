@@ -3,9 +3,12 @@ package com.icemobile.rabbitsandbox.rabbit.rabbitmq;
 import com.icemobile.rabbitsandbox.commons.constants.RabbitConstants;
 import com.icemobile.rabbitsandbox.commons.dto.UserDto;
 import com.icemobile.rabbitsandbox.commons.messages.user.CreateUserMessage;
+import com.icemobile.rabbitsandbox.commons.messages.user.DeactivateUserMessage;
+import com.icemobile.rabbitsandbox.commons.messages.user.DeactivateUserResponseMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.GetUserMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.GetUserResponseMessage;
 import com.icemobile.rabbitsandbox.commons.messages.user.UpdateUserMessage;
+import com.icemobile.rabbitsandbox.rabbit.config.RabbitSettings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,19 +22,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RabbitProducer {
 
+    private final RabbitSettings settings;
+
     private final RabbitTemplate rabbitTemplate;
 
-    public Optional<GetUserResponseMessage> getUser(String login) {
+    public Optional<UserDto> getUser(String login) {
         var message = new GetUserMessage(login);
         log.info("Sending get user message {}", message);
-        return Optional.ofNullable((GetUserResponseMessage) rabbitTemplate.convertSendAndReceive(
+        var response = (GetUserResponseMessage) rabbitTemplate.convertSendAndReceive(
             RabbitConstants.USER_EXCHANGE_NAME,
-            RabbitConstants.USER_QUEUE_NAME, message));
+            RabbitConstants.USER_QUEUE_NAME, message);
+        return Optional.ofNullable(response.getUser());
     }
 
     public void createUser(UserDto user) {
         var message = new CreateUserMessage(user);
-        log.info("Sending create user batch message {}", message);
+        log.info("Sending create user message {}", message);
         rabbitTemplate.convertAndSend(
             RabbitConstants.USER_EXCHANGE_NAME,
             RabbitConstants.USER_QUEUE_NAME, message);
@@ -39,8 +45,16 @@ public class RabbitProducer {
 
     public void updateUser(UserDto user) {
         var message = new UpdateUserMessage(user);
-        log.info("Sending update user batch message {}", message);
+        log.info("Sending update user message {}", message);
         rabbitTemplate.convertAndSend(
+            RabbitConstants.USER_EXCHANGE_NAME,
+            RabbitConstants.USER_QUEUE_NAME, message);
+    }
+
+    public DeactivateUserResponseMessage deactiveUser(String login) {
+        var message = new DeactivateUserMessage(login);
+        log.info("Sending deactivate user message {}", message);
+        return (DeactivateUserResponseMessage) rabbitTemplate.convertSendAndReceive(
             RabbitConstants.USER_EXCHANGE_NAME,
             RabbitConstants.USER_QUEUE_NAME, message);
     }

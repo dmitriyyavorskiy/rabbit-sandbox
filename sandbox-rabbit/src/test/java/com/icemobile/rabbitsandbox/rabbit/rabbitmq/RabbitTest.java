@@ -48,9 +48,9 @@ public class RabbitTest extends IntegrationTest {
         Awaitility.await().atMost(1, TimeUnit.SECONDS).until(() -> userService.getUserCount() == 10);
 
         // send get user and get response
-        Awaitility.await().atMost(11, TimeUnit.SECONDS).until(() -> producer.getUser("Login " + 0).isPresent());
+        Awaitility.await().atMost(1, TimeUnit.SECONDS).until(() -> producer.getUser("Login " + 10).isPresent());
 
-        assertTrue(producer.getUser("Login " + 12).isEmpty());
+        assertTrue(producer.getUser("Login " + 11).isEmpty());
 
     }
 }
